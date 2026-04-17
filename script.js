@@ -22,26 +22,49 @@ function updateUpcomingWeight(){
 
 updateUpcomingWeight();
 
+function addLog(message){
+    const li = document.createElement("li");
+    li.textContent = message;
+    activityLog.appendChild(li);
+}
+
+function updateTotals(){
+    let leftTotal = 0;
+    let rightTotal = 0;
+
+    for(let i=0;i<items.length;i++){
+        if(items[i].distance < 0){
+            leftTotal += items[i].weight;
+        }else if(items[i].distance > 0){
+            rightTotal += items[i].weight;
+        }
+    }
+    leftTotalText.textContent = `${leftTotal} kg`;
+    rightTotalText.textContent = `${rightTotal} kg`;
+}
+
 beamHitbox.addEventListener("click", function(event){
     const rect = beamHitbox.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
     const centerX = rect.width / 2;
     const distanceFromCenter = clickX - centerX;
 
-    console.log("clickX:", clickX);
-    console.log("centerX:", centerX);
-    console.log("distanceFromCenter:", distanceFromCenter);
+    const newItem = {
+        weight: upcomingWeight,
+        distance: distanceFromCenter
+    };
 
-    if(distanceFromCenter < 0 ){
-        console.log("Clicked on left side");
+    items.push(newItem);
+
+    if(newItem.distance < 0 ){
+        addLog(`${newItem.weight} kg added to the left side`);
     }else if(distanceFromCenter > 0){
-        console.log("Clicked on right side");
-
+        addLog(`${newItem.weight} kg added to the right side`);
     }else{
-        console.log("Clicked exactly at the center");
-
+        addLog(`${newItem.weight} kg added at the center`);
     }
-    
+    updateTotals();
+
     upcomingWeight = generateRandomWeight();
     updateUpcomingWeight();
 });
