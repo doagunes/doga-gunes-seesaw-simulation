@@ -65,8 +65,8 @@ body {
     position: absolute;
     left: 50%;
     top: 58%;
-    width: 460px;
-    height: 90px;
+    width: 430px;
+    height: 25px;
     transform: translate(-50%, -50%);
     cursor: pointer;
     z-index: 3;
@@ -96,4 +96,36 @@ body {
     border-right: 26px solid transparent;
     border-bottom: 70px solid #4a647a;
     z-index: 2;
+}
+
+.actions {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#reset-btn {
+    padding: 10px 18px;
+    border: 1px solid #c7ced6;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+.logs {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid #d7dde5;
+}
+
+.logs h2 {
+    margin-bottom: 12px;
+    font-size: 24px;
+}
+
+#activity-log {
+    list-style: none;
+    min-height: 60px;
 }
