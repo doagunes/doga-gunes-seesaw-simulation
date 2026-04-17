@@ -22,7 +22,26 @@ function updateUpcomingWeight(){
 
 updateUpcomingWeight();
 
-beamHitbox.addEventListener("click", function(){
+beamHitbox.addEventListener("click", function(event){
+    const rect = beamHitbox.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+    const centerX = rect.width / 2;
+    const distanceFromCenter = clickX - centerX;
+
+    console.log("clickX:", clickX);
+    console.log("centerX:", centerX);
+    console.log("distanceFromCenter:", distanceFromCenter);
+
+    if(distanceFromCenter < 0 ){
+        console.log("Clicked on left side");
+    }else if(distanceFromCenter > 0){
+        console.log("Clicked on right side");
+
+    }else{
+        console.log("Clicked exactly at the center");
+
+    }
+    
     upcomingWeight = generateRandomWeight();
     updateUpcomingWeight();
 });
