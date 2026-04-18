@@ -1,7 +1,5 @@
 const beamHitbox = document.getElementById("beam-hitbox");
 const beamGroup = document.getElementById("beam-group");
-const beam = document.getElementById("beam");
-const scene = document.getElementById("scene");
 const itemsLayer = document.getElementById("items-layer");
 const leftTotalText = document.getElementById("left-total");
 const rightTotalText = document.getElementById("right-total");
@@ -28,7 +26,7 @@ function addLog(message){
     activityLog.appendChild(li);
 }
 
-function updateTotals(){
+function calculateTotals(){
     let leftTotal = 0;
     let rightTotal = 0;
     for(let i = 0; i < items.length; i++){
@@ -66,7 +64,7 @@ function renderItems() {
     }
 }
 
-function updateBeamAngle() {
+function calculateAngle() {
     let leftTorque = 0;
     let rightTorque = 0;
     for (let i = 0; i < items.length; i++) {
@@ -82,7 +80,7 @@ function updateBeamAngle() {
     const angle = Math.max(-30, Math.min(30, rawAngle));
     currentAngle = angle;
     beamGroup.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-    beamAngleText.textContent = `${angle.toFixed(1)}°`;
+    beamAngleText.textContent = `${Math.round(angle)}°`;
 }
 
 beamHitbox.addEventListener("click", function(event){
@@ -97,8 +95,8 @@ beamHitbox.addEventListener("click", function(event){
     };
 
     items.push(newItem);
-    updateTotals();
-    updateBeamAngle();
+    calculateTotals();
+    calculateAngle();
     renderItems();
 
     if(newItem.distance < 0 ){
@@ -153,7 +151,7 @@ function loadState(){
     if (savedWeight) {
         upcomingWeight = Number(savedWeight);
     }
-    updateTotals();
+    calculateTotals();
     renderItems();
     beamGroup.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
     beamAngleText.textContent = `${currentAngle}°`;
