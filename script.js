@@ -13,7 +13,6 @@ const resetButton = document.getElementById("reset-btn");
 function generateRandomWeight(){
     return Math.floor(Math.random() * 10) + 1;
 }
-
 let items = [];
 let currentAngle = 0;
 let upcomingWeight = generateRandomWeight();
@@ -21,7 +20,6 @@ let upcomingWeight = generateRandomWeight();
 function updateUpcomingWeight(){
     upcomingWeightText.textContent = `${upcomingWeight} kg`;
 }
-
 updateUpcomingWeight();
 
 function addLog(message){
@@ -33,7 +31,6 @@ function addLog(message){
 function updateTotals(){
     let leftTotal = 0;
     let rightTotal = 0;
-
     for(let i = 0; i < items.length; i++){
         if(items[i].distance < 0){
             leftTotal += items[i].weight;
@@ -41,14 +38,13 @@ function updateTotals(){
             rightTotal += items[i].weight;
         }
     }
-
     leftTotalText.textContent = `${leftTotal} kg`;
     rightTotalText.textContent = `${rightTotal} kg`;
+
 }
 
 function renderItems() {
     itemsLayer.innerHTML = "";
-
     const beamWidth = 420;
     const itemSize = 40;
     const beamCenterX = beamWidth / 2;
@@ -73,10 +69,8 @@ function renderItems() {
 function updateBeamAngle() {
     let leftTorque = 0;
     let rightTorque = 0;
-
     for (let i = 0; i < items.length; i++) {
         const item = items[i];
-
         if (item.distance < 0) {
             leftTorque += item.weight * Math.abs(item.distance);
         } else if (item.distance > 0) {
@@ -86,9 +80,7 @@ function updateBeamAngle() {
 
     const rawAngle = (rightTorque - leftTorque) / 100;
     const angle = Math.max(-30, Math.min(30, rawAngle));
-
     currentAngle = angle;
-
     beamGroup.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     beamAngleText.textContent = `${angle.toFixed(1)}°`;
 }
@@ -119,6 +111,7 @@ beamHitbox.addEventListener("click", function(event){
 
     upcomingWeight = generateRandomWeight();
     updateUpcomingWeight();
+    saveState();
 });
 
 function reset(){
@@ -137,5 +130,36 @@ function reset(){
     updateUpcomingWeight();
 
     addLog("Simulation has been reset");
+    saveState();
 }
+
+function saveState(){
+    localStorage.setItem("items", JSON.stringify(items));
+    localStorage.setItem("angle", currentAngle);
+    localStorage.setItem("upcomingWeight", upcomingWeight);
+}
+
+function loadState(){
+    const savedItems = localStorage.getItem("items");
+    const savedAngle = localStorage.getItem("angle");
+    const savedWeight = localStorage.getItem("upcomingWeight");
+
+    if (savedItems) {
+        items = JSON.parse(savedItems);
+    }
+    if (savedAngle) {
+        currentAngle = Number(savedAngle);
+    }
+    if (savedWeight) {
+        upcomingWeight = Number(savedWeight);
+    }
+    updateTotals();
+    renderItems();
+    beamGroup.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
+    beamAngleText.textContent = `${currentAngle}°`;
+
+    updateUpcomingWeight();
+}
+
 resetButton.addEventListener("click", reset);
+loadState();
