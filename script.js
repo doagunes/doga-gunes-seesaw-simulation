@@ -1,6 +1,7 @@
 
 const beamHitbox = document.getElementById("beam-hitbox");
 const beam = document.getElementById("beam");
+const scene = document.getElementById("scene");
 const itemsLayer = document.getElementById("items-layer");
 const leftTotalText = document.getElementById("left-total");
 const rightTotalText = document.getElementById("right-total");
@@ -55,6 +56,7 @@ beamHitbox.addEventListener("click", function(event){
     };
 
     items.push(newItem);
+    renderItems();
 
     if(newItem.distance < 0 ){
         addLog(`${newItem.weight} kg added to the left side`);
@@ -68,3 +70,30 @@ beamHitbox.addEventListener("click", function(event){
     upcomingWeight = generateRandomWeight();
     updateUpcomingWeight();
 });
+
+function renderItems() {
+    itemsLayer.innerHTML = "";
+
+    const sceneRect = scene.getBoundingClientRect();
+    const beamRect = beam.getBoundingClientRect();
+    const itemSize = 40;
+
+    const beamCenterX = (beamRect.left - sceneRect.left) + (beamRect.width / 2);
+    const beamCenterY = (beamRect.top - sceneRect.top) + (beamRect.height / 2);
+
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const itemElement = document.createElement("div");
+
+        itemElement.classList.add("item");
+        itemElement.textContent = `${item.weight} kg`;
+
+        const itemX = beamCenterX + item.distance - (itemSize / 2);
+        const itemY = beamCenterY - (itemSize / 2) ;
+
+        itemElement.style.left = `${itemX}px`;
+        itemElement.style.top = `${itemY}px`;
+
+        itemsLayer.appendChild(itemElement);
+    }
+}
