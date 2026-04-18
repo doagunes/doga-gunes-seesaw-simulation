@@ -80,26 +80,18 @@ body {
     background: #d6e8c8;
 }
 
-.beam-hitbox {
-    position: absolute;
-    left: 50%;
-    top: 58%;
-    width: 440px;
-    height: 50px;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    z-index: 3;
-}
+
 
 .beam-group {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 58%; 
     width: 420px;
     height: 40px;
     transform: translate(-50%, -50%) rotate(0deg);
     transform-origin: center center;
     transition: transform 0.55s ease-in-out;
+    z-index: 3;
 }
 
 .beam {
@@ -107,10 +99,11 @@ body {
     left: 0;
     top: 12px;
     width: 420px;
-    height: 16px;
+    height: 18px;
     background: #9b6336;
     border: 1px solid #7a4d2b;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .items-layer {
@@ -137,7 +130,7 @@ body {
 .pivot {
     position: absolute;
     left: 50%;
-    top: calc(58% + 8px);
+    top: 53%;
     transform: translateX(-50%);
     width: 0;
     height: 0;

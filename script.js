@@ -1,4 +1,4 @@
-const beamHitbox = document.getElementById("beam-hitbox");
+const beam = document.getElementById("beam");
 const beamGroup = document.getElementById("beam-group");
 const itemsLayer = document.getElementById("items-layer");
 const leftTotalText = document.getElementById("left-total");
@@ -7,6 +7,7 @@ const beamAngleText = document.getElementById("beam-angle");
 const upcomingWeightText = document.getElementById("upcoming-weight");
 const activityLog = document.getElementById("activity-log");
 const resetButton = document.getElementById("reset-btn");
+const dropSound = document.getElementById("drop-sound");
 
 function generateRandomWeight(){
     return Math.floor(Math.random() * 10) + 1;
@@ -18,14 +19,16 @@ function getItemColor(weight) {
     const colors = {
         1: "#f94144",
         2: "#f3722c",
-        3: "#f8961e",
+        3: "#90be6d",
         4: "#f9844a",
-        5: "#f9c74f",
-        6: "#90be6d",
+        5:  "#277da1",
+        6: "#f8961e",
         7: "#43aa8b",
         8: "#577590",
-        9: "#277da1",
+        9: "#f9c74f",
         10: "#6a4c93"
+       
+        
     };
 
     return colors[weight];
@@ -45,7 +48,7 @@ function addLog(message){
     const li = document.createElement("li");
     li.textContent = message;
     activityLog.prepend(li);
-    saveState();
+    
 }
 
 function calculateTotals(){
@@ -65,7 +68,6 @@ function calculateTotals(){
 
 function renderItems() {
     itemsLayer.innerHTML = "";
-
     const beamWidth = 420;
     const beamCenterX = beamWidth / 2;
     const itemY = 0;
@@ -73,10 +75,8 @@ function renderItems() {
     for (let i = 0; i < items.length; i++) {
         const item = items[i];
         const itemElement = document.createElement("div");
-
         const itemSize = getItemSize(item.weight);
         const itemColor = getItemColor(item.weight);
-
         itemElement.classList.add("item");
         itemElement.textContent = `${item.weight} kg`;
 
@@ -104,15 +104,15 @@ function calculateAngle() {
         }
     }
 
-    const rawAngle = (rightTorque - leftTorque) / 10;
+    const rawAngle = (rightTorque - leftTorque) / 30;
     const angle = Math.max(-30, Math.min(30, rawAngle));
     currentAngle = angle;
     beamGroup.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     beamAngleText.textContent = `${angle.toFixed(1)}°`;
 }
 
-beamHitbox.addEventListener("click", function(event){
-    const rect = beamHitbox.getBoundingClientRect();
+beam.addEventListener("click", function(event){
+    const rect = beam.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
     const centerX = rect.width / 2;
     const distanceFromCenter = clickX - centerX;
@@ -123,6 +123,11 @@ beamHitbox.addEventListener("click", function(event){
     };
 
     items.push(newItem);
+
+    dropSound.currentTime = 0;
+    dropSound.volume = 0.3;
+    dropSound.play().catch(() => {});
+
     calculateTotals();
     calculateAngle();
     renderItems();
@@ -147,9 +152,9 @@ function reset(){
     itemsLayer.innerHTML = "";
     activityLog.innerHTML = "";
 
-    leftTotalText.textContent = 0;
-    rightTotalText.textContent = 0;
-    beamAngleText.textContent = 0;
+    leftTotalText.textContent = "0 kg";
+    rightTotalText.textContent = "0 kg";
+    beamAngleText.textContent = "0.0°";
 
     beamGroup.style.transform = "translate(-50%, -50%) rotate(0deg)";
 
