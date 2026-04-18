@@ -105,7 +105,6 @@ beamHitbox.addEventListener("click", function(event){
     };
 
     items.push(newItem);
-
     updateTotals();
     updateBeamAngle();
     renderItems();
@@ -121,3 +120,22 @@ beamHitbox.addEventListener("click", function(event){
     upcomingWeight = generateRandomWeight();
     updateUpcomingWeight();
 });
+
+function reset(){
+    items = [];
+    currentAngle = 0;
+    itemsLayer.innerHTML = "";
+    activityLog.innerHTML = "";
+
+    leftTotalText.textContent = 0;
+    rightTotalText.textContent = 0;
+    beamAngleText.textContent = 0;
+
+    beamGroup.style.transform = "translate(-50%, -50%) rotate(0deg)";
+
+    upcomingWeight = generateRandomWeight();
+    updateUpcomingWeight();
+
+    addLog("Simulation has been reset");
+}
+resetButton.addEventListener("click", reset);
