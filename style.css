@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
+    background-color: #f3f4f6;
 }
 
 .app {
@@ -20,8 +20,14 @@ body {
     margin-bottom: 20px;
 }
 
+.app-header h1 {
+    font-size: 34px;
+    font-weight: 600;
+}
+
 .subtitle {
-    color: #666;
+    color: #777;
+    font-size: 14px;
     margin-top: 5px;
 }
 
@@ -35,8 +41,19 @@ body {
     flex: 1;
     background: white;
     padding: 15px;
-    border-radius: 8px;
+    border-radius: 10px;
     text-align: center;
+    border: 1px solid #e2e6ea;
+}
+
+.info-card h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.info-card p {
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .playground {
@@ -106,9 +123,6 @@ body {
 
 .item {
     position: absolute;
-    width: 40px;
-    height: 40px;
-    background: #4a90e2;
     color: white;
     border-radius: 50%;
     font-size: 11px;
@@ -143,21 +157,42 @@ body {
     background: white;
     cursor: pointer;
     font-size: 14px;
+    transition: box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+#reset-btn:active {
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.25);
+    background: #f0f0f0;
+    transform: translateY(2px);
 }
 
 .logs {
     background: white;
     border-radius: 10px;
-    padding: 16px;
+    padding: 12px;
     border: 1px solid #d7dde5;
+
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .logs h2 {
-    margin-bottom: 12px;
-    font-size: 24px;
+    margin-bottom: 8px;
+    font-size: 18px;
 }
 
 #activity-log {
     list-style: none;
-    min-height: 60px;
+    height: 100px;       
+    overflow-y: auto;    
+    font-size: 14px;
+}
+
+#activity-log li {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    background: #f7f7f7;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #444;
 }

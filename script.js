@@ -11,6 +11,25 @@ const resetButton = document.getElementById("reset-btn");
 function generateRandomWeight(){
     return Math.floor(Math.random() * 10) + 1;
 }
+function getItemSize(weight) {
+    return 26 + weight * 3;
+}
+function getItemColor(weight) {
+    const colors = {
+        1: "#f94144",
+        2: "#f3722c",
+        3: "#f8961e",
+        4: "#f9844a",
+        5: "#f9c74f",
+        6: "#90be6d",
+        7: "#43aa8b",
+        8: "#577590",
+        9: "#277da1",
+        10: "#6a4c93"
+    };
+
+    return colors[weight];
+}
 let items = [];
 let currentAngle = 0;
 let upcomingWeight = generateRandomWeight();
@@ -23,7 +42,7 @@ updateUpcomingWeight();
 function addLog(message){
     const li = document.createElement("li");
     li.textContent = message;
-    activityLog.appendChild(li);
+    activityLog.prepend(li);
 }
 
 function calculateTotals(){
@@ -43,8 +62,8 @@ function calculateTotals(){
 
 function renderItems() {
     itemsLayer.innerHTML = "";
+
     const beamWidth = 420;
-    const itemSize = 40;
     const beamCenterX = beamWidth / 2;
     const itemY = 0;
 
@@ -52,13 +71,19 @@ function renderItems() {
         const item = items[i];
         const itemElement = document.createElement("div");
 
+        const itemSize = getItemSize(item.weight);
+        const itemColor = getItemColor(item.weight);
+
         itemElement.classList.add("item");
         itemElement.textContent = `${item.weight} kg`;
 
-        const itemX = beamCenterX + item.distance - (itemSize / 2);
+        const itemX = beamCenterX + item.distance - itemSize / 2;
 
+        itemElement.style.width = `${itemSize}px`;
+        itemElement.style.height = `${itemSize}px`;
         itemElement.style.left = `${itemX}px`;
         itemElement.style.top = `${itemY}px`;
+        itemElement.style.backgroundColor = itemColor;
 
         itemsLayer.appendChild(itemElement);
     }
