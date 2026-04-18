@@ -31,6 +31,7 @@ function getItemColor(weight) {
     return colors[weight];
 }
 let items = [];
+let logs = [];
 let currentAngle = 0;
 let upcomingWeight = generateRandomWeight();
 
@@ -40,9 +41,11 @@ function updateUpcomingWeight(){
 updateUpcomingWeight();
 
 function addLog(message){
+    logs.unshift(message);
     const li = document.createElement("li");
     li.textContent = message;
     activityLog.prepend(li);
+    saveState();
 }
 
 function calculateTotals(){
@@ -101,11 +104,11 @@ function calculateAngle() {
         }
     }
 
-    const rawAngle = (rightTorque - leftTorque) / 100;
+    const rawAngle = (rightTorque - leftTorque) / 10;
     const angle = Math.max(-30, Math.min(30, rawAngle));
     currentAngle = angle;
     beamGroup.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-    beamAngleText.textContent = `${Math.round(angle)}°`;
+    beamAngleText.textContent = `${angle.toFixed(1)}°`;
 }
 
 beamHitbox.addEventListener("click", function(event){
@@ -139,6 +142,7 @@ beamHitbox.addEventListener("click", function(event){
 
 function reset(){
     items = [];
+    logs = [];
     currentAngle = 0;
     itemsLayer.innerHTML = "";
     activityLog.innerHTML = "";
@@ -160,12 +164,14 @@ function saveState(){
     localStorage.setItem("items", JSON.stringify(items));
     localStorage.setItem("angle", currentAngle);
     localStorage.setItem("upcomingWeight", upcomingWeight);
+    localStorage.setItem("logs", JSON.stringify(logs));
 }
 
 function loadState(){
     const savedItems = localStorage.getItem("items");
     const savedAngle = localStorage.getItem("angle");
     const savedWeight = localStorage.getItem("upcomingWeight");
+    const savedLogs = localStorage.getItem("logs");
 
     if (savedItems) {
         items = JSON.parse(savedItems);
@@ -176,10 +182,21 @@ function loadState(){
     if (savedWeight) {
         upcomingWeight = Number(savedWeight);
     }
+    if (savedLogs) {
+        logs = JSON.parse(savedLogs);
+    
+        activityLog.innerHTML = "";
+    
+        for (let i = 0; i < logs.length; i++) {
+            const li = document.createElement("li");
+            li.textContent = logs[i];
+            activityLog.appendChild(li);
+        }
+    }
     calculateTotals();
     renderItems();
     beamGroup.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
-    beamAngleText.textContent = `${currentAngle}°`;
+    beamAngleText.textContent = `${currentAngle.toFixed(1)}°`;
 
     updateUpcomingWeight();
 }

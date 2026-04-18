@@ -49,11 +49,13 @@ body {
 .info-card h2 {
     font-size: 20px;
     margin-bottom: 6px;
+    color: #444;
 }
 
 .info-card p {
     font-size: 16px;
     font-weight: 600;
+    color: #777;
 }
 
 .playground {
@@ -154,7 +156,8 @@ body {
     padding: 10px 18px;
     border: 1px solid #c7ced6;
     border-radius: 8px;
-    background: white;
+    background: #c7ced6;
+    color: #444;
     cursor: pointer;
     font-size: 14px;
     transition: box-shadow 0.15s ease, transform 0.1s ease;
@@ -195,4 +198,5 @@ body {
     border-radius: 6px;
     font-size: 13px;
     color: #444;
+    
 }
