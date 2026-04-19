@@ -51,6 +51,7 @@ function addLog(message){
     
 }
 
+
 function calculateTotals(){
     let leftTotal = 0;
     let rightTotal = 0;
@@ -133,9 +134,9 @@ beam.addEventListener("click", function(event){
     renderItems();
 
     if(newItem.distance < 0 ){
-        addLog(`${newItem.weight} kg added to the left side`);
+        addLog(`${newItem.weight} kg added to the left side (${Math.round(Math.abs(newItem.distance))} px)`);
     }else if(newItem.distance > 0){
-        addLog(`${newItem.weight} kg added to the right side`);
+        addLog(`${newItem.weight} kg added to the right side (${Math.round(newItem.distance)} px)`);
     }else{
         addLog(`${newItem.weight} kg added at the center`);
     }
