@@ -2,6 +2,10 @@
 
 This project is a simple seesaw simulation built using JavaScript (Vanilla), HTML and CSS.
 
+## Demo Video
+
+[Watch the video](https://youtu.be/FsF2Ixc7Ze0)
+
 ## Project Link
 
 👉🏻 [View the application](https://doagunes.github.io/doga-gunes-seesaw-simulation/)
