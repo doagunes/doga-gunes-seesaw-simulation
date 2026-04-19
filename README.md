@@ -1,6 +1,6 @@
 # Seesaw Simulation
 
-This project is a simple seesaw simulation built using plain JavaScript, HTML and CSS.
+This project is a simple seesaw simulation built using JavaScript (Vanilla), HTML and CSS.
 
 <img width="1044" height="818" alt="seesaw" src="https://github.com/user-attachments/assets/80114c75-7679-4cb6-934d-69d0c6aa4064" />
 
