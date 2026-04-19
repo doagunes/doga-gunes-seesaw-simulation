@@ -3,6 +3,7 @@
 This project is a simple seesaw simulation built using JavaScript (Vanilla), HTML and CSS.
 
 ## Demo Video
+In this video, I explain the core logic of the project and walk through the key parts of the implementation, along with a brief overview of the application.
 
 [Watch the video](https://youtu.be/FsF2Ixc7Ze0)
 
